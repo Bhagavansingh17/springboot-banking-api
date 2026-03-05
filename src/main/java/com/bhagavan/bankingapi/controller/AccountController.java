@@ -3,10 +3,11 @@ package com.bhagavan.bankingapi.controller;
 import com.bhagavan.bankingapi.dto.AccountResponse;
 import com.bhagavan.bankingapi.dto.AmountRequest;
 import com.bhagavan.bankingapi.dto.CreateAccountRequest;
-import com.bhagavan.bankingapi.entity.Transaction;
 import com.bhagavan.bankingapi.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import com.bhagavan.bankingapi.dto.TransactionResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class AccountController {
 
     // ✅ TRANSACTIONS (same as before)
     @GetMapping("/{id}/transactions")
-    public org.springframework.data.domain.Page<Transaction> transactions(
+    public Page<TransactionResponse> transactions(
             @PathVariable Long id,
             @RequestParam String pin,
             @RequestParam(defaultValue = "0") int page,

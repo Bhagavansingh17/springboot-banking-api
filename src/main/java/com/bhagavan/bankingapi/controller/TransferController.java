@@ -1,6 +1,8 @@
 package com.bhagavan.bankingapi.controller;
 
 import com.bhagavan.bankingapi.dto.TransferRequest;
+import com.bhagavan.bankingapi.dto.TransferResponse;
+import com.bhagavan.bankingapi.entity.Transaction;
 import com.bhagavan.bankingapi.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,17 @@ public class TransferController {
     }
 
     @PostMapping
-    public String transfer(@Valid @RequestBody TransferRequest req) {
-        service.transfer(req);
-        return "✅ Transfer successful";
+    public TransferResponse transfer(@Valid @RequestBody TransferRequest req) {
+
+        Transaction tx = service.transfer(req);
+
+        return new TransferResponse(
+                tx.getId(),
+                "SUCCESS",
+                tx.getFromAccountId(),
+                tx.getToAccountId(),
+                tx.getAmount(),
+                tx.getCreatedAt()
+        );
     }
 }

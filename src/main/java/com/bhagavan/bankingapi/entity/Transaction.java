@@ -17,15 +17,16 @@ public class Transaction {
     @Column(nullable = false)
     private double amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String type; // DEPOSIT / WITHDRAW / TRANSFER
+    private TransactionType type;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     public Transaction() {}
 
-    public Transaction(Long fromAccountId, Long toAccountId, double amount, String type) {
+    public Transaction(Long fromAccountId, Long toAccountId, double amount, TransactionType type) {
         this.fromAccountId = fromAccountId;
         this.toAccountId = toAccountId;
         this.amount = amount;
@@ -37,6 +38,6 @@ public class Transaction {
     public Long getFromAccountId() { return fromAccountId; }
     public Long getToAccountId() { return toAccountId; }
     public double getAmount() { return amount; }
-    public String getType() { return type; }
+    public TransactionType getType() { return type; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }
