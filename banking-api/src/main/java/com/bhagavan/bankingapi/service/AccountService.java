@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.bhagavan.bankingapi.dto.TransferRequest;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import com.bhagavan.bankingapi.dto.AccountResponse;
 
 @Service
@@ -80,10 +82,15 @@ public class AccountService {
         return toResponse(saved);
     }
 
-    public List<Transaction> getTransactions(Long accountId, String pin) {
+    public Page<Transaction> getTransactions(Long accountId, String pin, int page, int size) {
         Account acc = getAccount(accountId);
         verifyPin(acc, pin);
-        return txRepo.findByFromAccountIdOrToAccountId(accountId, accountId);
+
+        return txRepo.findByFromAccountIdOrToAccountId(
+                accountId,
+                accountId,
+                PageRequest.of(page, size)
+        );
     }
 
     @Transactional

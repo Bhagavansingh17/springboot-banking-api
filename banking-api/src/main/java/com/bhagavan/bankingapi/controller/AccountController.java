@@ -46,7 +46,12 @@ public class AccountController {
 
     // ✅ TRANSACTIONS (same as before)
     @GetMapping("/{id}/transactions")
-    public List<Transaction> transactions(@PathVariable Long id, @RequestParam String pin) {
-        return service.getTransactions(id, pin);
+    public org.springframework.data.domain.Page<Transaction> transactions(
+            @PathVariable Long id,
+            @RequestParam String pin,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return service.getTransactions(id, pin, page, size);
     }
 }
